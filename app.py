@@ -17,9 +17,12 @@ def send_webhook(msg):
 @app.route('/update', methods=['POST'])
 def act_like_jenkins():
     data = request.get_json()
+    branch_info = data['ref'].split('/')[-1]
+    
     try:
-        os.system('./example.sh')
         send_webhook("Success")
+        os.system('./example.sh')
+        send_webhook("Successfully build Server \nbranch: " + branch_info)
     except:
         send_webhook("Fail")
 
