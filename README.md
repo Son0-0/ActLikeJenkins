@@ -30,3 +30,6 @@
   ```nohup python3 app.py &``` or ```nohup python app.py &```
 2. PM2 모듈 설치 및 app.js 실행
 ```npm install pm2``` and ```pm2 start app.js```
+
+## Slack Webhook Message
+<img width="731" alt="스크린샷 2022-08-07 오전 2 09 32" src="https://user-images.githubusercontent.com/81317358/183259276-b23dc08b-3098-4dda-93a2-89acc3410dd0.png">
