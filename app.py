@@ -1,33 +1,43 @@
-import os
+import subprocess
 import requests
 import json
+import os
+import slack_webhook
+from dotenv import load_dotenv
 from flask import Flask, request
 
-PORT_NUM = 5000
-WEBHOOK_URL = ''  # Slack Incomming Webhook URL
+load_dotenv()
+
+PORT_NUM = 5000  # OR os.environ.get('port_num')
+# Slack Incomming Webhook URL
+WEBHOOK_URL = os.environ.get('slack_webhook_url')
+REPO_PATH = os.environ.get('repository_path')
 
 app = Flask(__name__)
-
-
-def send_webhook(msg):
-    payload = {'text': msg}
-    requests.post(WEBHOOK_URL, json=payload)
 
 
 @app.route('/update', methods=['POST'])
 def act_like_jenkins():
     data = request.get_json()
     branch_info = data['ref'].split('/')[-1]
-    
+    repository_name = data['repository']['full_name']
+
+    commit_message = data['commits'][0]['message']
+    commiter = data['commits'][0]['committer']['name']
+
     try:
-        send_webhook("Success")
-        os.system('./example.sh')
-        send_webhook("Successfully build Server \nbranch: " + branch_info)
-    except:
-        send_webhook("Fail")
-
-    return {'status_code': 200}
-
+        child = subprocess.run(
+            [f'bash {REPO_PATH}'], text=True, capture_output=True, shell=True)
+        if child.stderr:
+            slack_webhook.error(WEBHOOK_URL, repository_name,
+                                branch_info, commiter, commit_message, child.stderr)
+        else:
+            slack_webhook.send(WEBHOOK_URL, repository_name,
+                               branch_info, commiter, commit_message)
+        return {'status_code': 200}
+    except Exception as e:
+        slack_webhook.error(WEBHOOK_URL, repository_name,
+                            branch_info, commiter, commit_message, e)
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=PORT_NUM, debug=True)
