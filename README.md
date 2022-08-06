@@ -1,5 +1,7 @@
 # ActLikeJenkins
 
+![actLikeJenkins](https://user-images.githubusercontent.com/81317358/183255704-893b2dcb-7eff-432c-9d7c-603c2a23fff9.jpg)
+
 ## Description
 - Github Repository에 업데이트가 일어나면 자동으로 배포
   - 메인 코드 Flask로 작성
