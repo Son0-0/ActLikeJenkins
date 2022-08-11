@@ -19,16 +19,17 @@ app = Flask(__name__)
 @app.route('/update', methods=['POST'])
 def act_like_jenkins():
     data = request.get_json()
-    branch_info = data['ref'].split('/')[-1]
-    repository_name = data['repository']['full_name']
-
-    commit_message = data['commits'][0]['message']
-    commiter = data['commits'][0]['committer']['name']
-
+    
     try:
+        branch_info = data['ref'].split('/')[-1]
+        repository_name = data['repository']['full_name']
+
+        commit_message = data['commits'][0]['message']
+        commiter = data['commits'][0]['committer']['name']
+      
         child = subprocess.run(
             [f'bash {REPO_PATH}'], text=True, capture_output=True, shell=True)
-        if child.stderr:
+        if len(child.stderr) != 0 :
             slack_webhook.error(WEBHOOK_URL, repository_name,
                                 branch_info, commiter, commit_message, child.stderr)
         else:
