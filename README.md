@@ -35,7 +35,7 @@
 ```npm install pm2``` and ```pm2 start app.js```
 
 3. 에러 로그 모니터를 위한 err_monitor/monitor.py 파일 실행
-```python3 err_monitor/monitor.py``` or ```python err_monitor/monitor.py``
+```python3 err_monitor/monitor.py``` or ```python err_monitor/monitor.py```
   - 서버 내 백그라운드 실행하고 싶은 경우
   ```nohup err_monitor/monitor.py &``` or ```nohup err_monitor/monitor.py &```
 
