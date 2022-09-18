@@ -32,3 +32,4 @@ def act(data: json):
         return {'status_code': 200}
     except Exception as e:
         webhook.error(WEBHOOK_URL, commit_info, e)
+        return {'status_code': 500}

@@ -7,4 +7,4 @@ update_bp = Blueprint('update_bp', __name__)
 @update_bp.route('/', methods=['POST'])
 def act_like_jenkins():
     data = request.get_json()
-    update.act(data)
+    return update.act(data)
