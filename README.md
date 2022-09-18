@@ -1,6 +1,28 @@
 # ActLikeJenkins
 
 ![alj](https://user-images.githubusercontent.com/81317358/183281262-ae215fdd-7dc6-4a8e-b681-8d6a1a8c1a4a.jpg)
+```
+.
+├── README.md
+├── app.py
+├── err_monitor
+│   ├── monitor.py
+│   └── slack_webhook.py
+├── example.sh
+├── requirements.txt
+├── routes
+│   └── update
+│       ├── controller
+│       │   └── update.py
+│       └── update.py
+└── utils
+    ├── commit
+    │   └── commit.py
+    └── webhook
+        └── webhook.py
+
+7 directories, 10 files
+```
 
 ## Description
 - Github Repository에 업데이트가 일어나면 자동으로 배포
@@ -20,7 +42,7 @@
 ## Settings
 1. PORT_NUM 설정 (기본 설정 5000)
 2. Github Webhook 설정
-  - 자신의 서버 url + :5000/update로 경로 설정
+  - 자신의 서버 url + :5000/update/로 경로 설정
   - 파일 실행전 서버 포트 열기
 3. WEBHOOK_URL 설정 (Slack)
 4. Shell script 파일 수정
