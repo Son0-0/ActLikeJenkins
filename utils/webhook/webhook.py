@@ -1,20 +1,21 @@
 import requests
 from datetime import datetime
+from utils.commit.commit import Commit
 
 Image = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
 
 
-def send(webhook_url, repository_name, branch_info, commiter, commit_message):
+def send(webhook_url: str, commit_info: Commit):
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     payload = {
-        "text": "[actLikeJenkins][Success ✅]: " + f"Repository: {repository_name}",
+        "text": "[actLikeJenkins][Success ✅]: " + f"Repository: {commit_info.repository_name}",
         "blocks": [
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "Repository: *" + repository_name + "*\nBranch: *" + branch_info + "*"
+                    "text": "Repository: *" + commit_info.repository_name + "*\nBranch: *" + commit_info.branch_info + "*"
                 }
             },
             {
@@ -22,7 +23,7 @@ def send(webhook_url, repository_name, branch_info, commiter, commit_message):
                 "block_id": "sections567",
                 "text": {
                     "type": "mrkdwn",
-                    "text": ">*Commiter:* " + commiter + "\n>*Commit Message:* " + commit_message + "\n>*When:* " + str(now)
+                    "text": ">*Commiter:* " + commit_info.commiter + "\n>*Commit Message:* " + commit_info.commit_message + "\n>*When:* " + str(now)
                 },
                 "accessory": {
                     "type": "image",
@@ -35,17 +36,17 @@ def send(webhook_url, repository_name, branch_info, commiter, commit_message):
     requests.post(webhook_url, json=payload)
 
 
-def error(webhook_url, repository_name, branch_info, commiter, commit_message, error_message):
+def error(webhook_url: str, commit_info: Commit, error_message: str):
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     payload = {
-        "text": "[actLikeJenkins][Fail ❌]: " + f"Repository: {repository_name}",
+        "text": "[actLikeJenkins][Fail ❌]: " + f"Repository: {commit_info.repository_name}",
         "blocks": [
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "*Repository:* " + repository_name + "\n*Branch:* " + branch_info
+                    "text": "*Repository:* " + commit_info.repository_name + "\n*Branch:* " + commit_info.branch_info
                 }
             },
             {
@@ -53,7 +54,7 @@ def error(webhook_url, repository_name, branch_info, commiter, commit_message, e
                 "block_id": "sections567",
                 "text": {
                     "type": "mrkdwn",
-                    "text": ">*Commiter:* " + commiter + "\n>*Commit Message:* " + commit_message + "\n>*When:* " + str(now) + "\n>*Error Message:* " + error_message
+                    "text": ">*Commiter:* " + commit_info.commiter + "\n>*Commit Message:* " + commit_info.commit_message + "\n>*When:* " + str(now) + "\n>*Error Message:* " + error_message
                 },
                 "accessory": {
                     "type": "image",
