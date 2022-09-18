@@ -5,7 +5,7 @@ from utils.commit.commit import Commit
 Image = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
 
 
-def send(webhook_url: str, commit_info: Commit) -> None:
+def send(webhook_url: str, commit_info: Commit):
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     payload = {
@@ -36,7 +36,7 @@ def send(webhook_url: str, commit_info: Commit) -> None:
     requests.post(webhook_url, json=payload)
 
 
-def error(webhook_url: str, commit_info: Commit, error_message: str) -> None:
+def error(webhook_url: str, commit_info: Commit, error_message: str):
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     payload = {

@@ -11,7 +11,7 @@ WEBHOOK_URL = os.environ.get('slack_webhook_url')
 REPO_PATH = os.environ.get('repository_path')
 
 
-def act(data: json) -> None:
+def act(data: json):
     try:
         branch_info = data['ref'].split('/')[-1]
         repository_name = data['repository']['full_name']
