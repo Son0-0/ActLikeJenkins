@@ -59,7 +59,7 @@
 3. 에러 로그 모니터를 위한 err_monitor/monitor.py 파일 실행
 ```python3 err_monitor/monitor.py``` or ```python err_monitor/monitor.py```
   - 서버 내 백그라운드 실행하고 싶은 경우
-  ```nohup err_monitor/monitor.py &``` or ```nohup err_monitor/monitor.py &```
+  ```nohup python3 err_monitor/monitor.py &``` or ```nohup python err_monitor/monitor.py &```
 
 ## Slack Webhook Message
 <img width="731" alt="스크린샷 2022-08-07 오전 2 09 32" src="https://user-images.githubusercontent.com/81317358/183259276-b23dc08b-3098-4dda-93a2-89acc3410dd0.png">
